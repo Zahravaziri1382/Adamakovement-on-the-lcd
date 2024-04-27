@@ -1,0 +1,60 @@
+#include <LiquidCrystal.h>
+const int rs = 12, en = 11, d4 = 5, d5 = 4, d6 = 3, d7 = 2;
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+byte armsDown[8] = {
+  0b00100,
+  0b01010,
+  0b00100,
+  0b00100,
+  0b01110,
+  0b10101,
+  0b00100,
+  0b01010
+};
+
+byte armsUp[8] = {
+  0b00100,
+  0b01010,
+  0b00100,
+  0b10101,
+  0b01110,
+  0b00100,
+  0b00100,
+  0b01010
+};
+
+void setup() {
+  // initialize LCD and set up the number of columns and rows:
+  lcd.begin(16, 2);
+
+  // create a new characterr
+  lcd.createChar(0, armsDown);
+  // create a new character
+  lcd.createChar(1, armsUp);
+}
+
+void loop() {
+  for (int i = 15; i > -1; i--) {
+    lcd.setCursor(i, 0);
+    if (i % 2 == 0) {
+      lcd.write(byte(0));
+    }
+    else {
+      lcd.write(byte(1));
+    }
+
+    delay(500);
+    lcd.clear( );
+  }
+  for (int i = 0; i < 16 ; i++) {
+    lcd.setCursor(i, 1);
+    if (i % 2 == 0) {
+      lcd.write(byte(0));
+    }
+    else {
+      lcd.setCursor(i, 1);
+    }
+    delay(500);
+    lcd.clear( );
+  }
+}
